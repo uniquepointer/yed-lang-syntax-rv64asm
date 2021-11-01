@@ -112,6 +112,8 @@ yed_plugin_boot(yed_plugin* self)
     highlight_add_kwd(&hinfo, "zero", HL_CON);
     highlight_within(&hinfo, "(", ")", 0, -1, HL_CALL);
     highlight_numbers(&hinfo);
+    highlight_prefixed_words(&hinfo, '.', HL_CON);
+    highlight_suffixed_words(&hinfo, ':', HL_CF);
     highlight_within(&hinfo, "\"", "\"", '\\', -1, HL_STR);
     highlight_within(&hinfo, "'", "'", '\\', 1, HL_CHAR);
     highlight_to_eol_from(&hinfo, "#", HL_COMMENT);
