@@ -60,7 +60,7 @@ yed_plugin_boot(yed_plugin* self)
         "amomax.w",  "amominu.w",  "amomaxu.w", "lr.d",      "sc.d",
         "amoswap.d", "amoadd.d",   "amoxor.d",  "amoand.d",  "amoor.d",
         "amomin.d",  "amomax.d",   "amominu.d", "amomaxu.d", "call",
-
+        "sext.w",
     };
     char* special_kwds[] =
     {
