@@ -46,6 +46,7 @@
 "addi",
 "addiw",
 "li",
+"la",
 "addi16sp",
 "lui",
 "srli",

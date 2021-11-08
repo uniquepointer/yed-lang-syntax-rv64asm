@@ -21,49 +21,47 @@ yed_plugin_boot(yed_plugin* self)
 {
     yed_event_handler frame, line, buff_mod_pre, buff_mod_post;
 
-    char* kwds[] =
-    {
-        "addi4spn",  "fld",        "lw",        "flw",       "ld",
-        "fsd",       "sw",         "fsw",       "sd",        "nop",
-        "addi",      "addiw",      "li",        "addi16sp",  "lui",
-        "srli",      "srai",       "andi",      "sub",       "xor",
-        "or",        "and",        "subw",      "addw",      "slli",
-        "fldsp",     "lwsp",       "flwsp",     "ldsp",      "mv",
-        "add",       "fsdsp",      "swsp",      "fswsp",     "sdsp",
-        "lui",       "auipc",      "addi",      "slti",      "sltiu",
-        "xori",      "ori",        "andi",      "slli",      "srli",
-        "srai",      "add",        "sub",       "sll",       "slt",
-        "sltu",      "xor",        "srl",       "sra",       "or",
-        "and",       "fence",      "fence.i",   "csrrw",     "csrrs",
-        "csrrc",     "csrrwi",     "csrrsi",    "csrrci",    "ecall",
-        "ebreak",    "sfence.vma", "lb",        "lh",        "lw",
-        "lbu",       "lhu",        "sb",        "sh",        "sw",
-        "addiw",     "slliw",      "srliw",     "sraiw",     "addw",
-        "subw",      "sllw",       "srlw",      "sraw",      "lwu",
-        "ld",        "sd",         "fmadd.s",   "fmsub.s",   "fnmsub.s",
-        "fnmadd.s",  "fadd.s",     "fsub.s",    "fmul.s",    "fdiv.s",
-        "fsqrt.s",   "fsgnj.s",    "fsgnjn.s",  "fsgnjx.s",  "fmin.s",
-        "fmax.s",    "fcvt.w.s",   "fcvt.wu.s", "fmv.x.w",   "feq.s",
-        "flt.s",     "fle.s",      "fclass.s",  "fcvt.s.w",  "fcvt.s.wu",
-        "fmv.w.x",   "fmadd.d",    "fmsub.d",   "fnmsub.d",  "fnmadd.d",
-        "fadd.d",    "fsub.d",     "fmul.d",    "fdiv.d",    "fsqrt.d",
-        "fsgnj.d",   "fsgnjn.d",   "fsgnjx.d",  "fmin.d",    "fmax.d",
-        "fcvt.s.d",  "fcvt.d.s",   "feq.d",     "flt.d",     "fle.d",
-        "fclass.d",  "fcvt.w.d",   "fcvt.wu.d", "fcvt.d.w",  "fcvt.d.wu",
-        "flw",       "fsw",        "fld",       "fsd",       "fcvt.l.s",
-        "fcvt.lu.s", "fcvt.s.l",   "fcvt.s.lu", "fcvt.l.d",  "fcvt.lu.d",
-        "fmv.x.d",   "fcvt.d.l",   "fcvt.d.lu", "fmv.d.x",   "mul",
-        "mulh",      "mulhsu",     "mulhu",     "div",       "divu",
-        "rem",       "remu",       "mulw",      "divw",      "divuw",
-        "remw",      "remuw",      "lr.w",      "sc.w",      "amoswap.w",
-        "amoadd.w",  "amoxor.w",   "amoand.w",  "amoor.w",   "amomin.w",
-        "amomax.w",  "amominu.w",  "amomaxu.w", "lr.d",      "sc.d",
-        "amoswap.d", "amoadd.d",   "amoxor.d",  "amoand.d",  "amoor.d",
-        "amomin.d",  "amomax.d",   "amominu.d", "amomaxu.d", "call",
-        "sext.w",
+    char* kwds[] = {
+        "addi4spn",  "fld",       "lw",         "flw",       "ld",
+        "fsd",       "sw",        "fsw",        "sd",        "nop",
+        "addi",      "addiw",     "li",         "la",        "addi16sp",
+        "lui",       "srli",      "srai",       "andi",      "sub",
+        "xor",       "or",        "and",        "subw",      "addw",
+        "slli",      "fldsp",     "lwsp",       "flwsp",     "ldsp",
+        "mv",        "add",       "fsdsp",      "swsp",      "fswsp",
+        "sdsp",      "lui",       "auipc",      "addi",      "slti",
+        "sltiu",     "xori",      "ori",        "andi",      "slli",
+        "srli",      "srai",      "add",        "sub",       "sll",
+        "slt",       "sltu",      "xor",        "srl",       "sra",
+        "or",        "and",       "fence",      "fence.i",   "csrrw",
+        "csrrs",     "csrrc",     "csrrwi",     "csrrsi",    "csrrci",
+        "ecall",     "ebreak",    "sfence.vma", "lb",        "lh",
+        "lw",        "lbu",       "lhu",        "sb",        "sh",
+        "sw",        "addiw",     "slliw",      "srliw",     "sraiw",
+        "addw",      "subw",      "sllw",       "srlw",      "sraw",
+        "lwu",       "ld",        "sd",         "fmadd.s",   "fmsub.s",
+        "fnmsub.s",  "fnmadd.s",  "fadd.s",     "fsub.s",    "fmul.s",
+        "fdiv.s",    "fsqrt.s",   "fsgnj.s",    "fsgnjn.s",  "fsgnjx.s",
+        "fmin.s",    "fmax.s",    "fcvt.w.s",   "fcvt.wu.s", "fmv.x.w",
+        "feq.s",     "flt.s",     "fle.s",      "fclass.s",  "fcvt.s.w",
+        "fcvt.s.wu", "fmv.w.x",   "fmadd.d",    "fmsub.d",   "fnmsub.d",
+        "fnmadd.d",  "fadd.d",    "fsub.d",     "fmul.d",    "fdiv.d",
+        "fsqrt.d",   "fsgnj.d",   "fsgnjn.d",   "fsgnjx.d",  "fmin.d",
+        "fmax.d",    "fcvt.s.d",  "fcvt.d.s",   "feq.d",     "flt.d",
+        "fle.d",     "fclass.d",  "fcvt.w.d",   "fcvt.wu.d", "fcvt.d.w",
+        "fcvt.d.wu", "flw",       "fsw",        "fld",       "fsd",
+        "fcvt.l.s",  "fcvt.lu.s", "fcvt.s.l",   "fcvt.s.lu", "fcvt.l.d",
+        "fcvt.lu.d", "fmv.x.d",   "fcvt.d.l",   "fcvt.d.lu", "fmv.d.x",
+        "mul",       "mulh",      "mulhsu",     "mulhu",     "div",
+        "divu",      "rem",       "remu",       "mulw",      "divw",
+        "divuw",     "remw",      "remuw",      "lr.w",      "sc.w",
+        "amoswap.w", "amoadd.w",  "amoxor.w",   "amoand.w",  "amoor.w",
+        "amomin.w",  "amomax.w",  "amominu.w",  "amomaxu.w", "lr.d",
+        "sc.d",      "amoswap.d", "amoadd.d",   "amoxor.d",  "amoand.d",
+        "amoor.d",   "amomin.d",  "amomax.d",   "amominu.d", "amomaxu.d",
+        "call",      "sext.w",
     };
-    char* special_kwds[] =
-    {
+    char* special_kwds[] = {
         "zero", "ra",  "sp",   "gp",   "tp",  "t0",  "t1",   "t2",
         "s0",   "s1",  "a0",   "a1",   "a2",  "a3",  "a4",   "a5",
         "a6",   "a7",  "s2",   "s3",   "s4",  "s5",  "s6",   "s7",
@@ -73,14 +71,12 @@ yed_plugin_boot(yed_plugin* self)
         "fa6",  "fa7", "fs2",  "fs3",  "fs4", "fs5", "fs6",  "fs7",
         "fs8",  "fs9", "fs10", "fs11", "ft8", "ft9", "ft10", "ft11",
     };
-    char* control_flow[] =
-    {
+    char* control_flow[] = {
         "uret",   "sret", "mret", "wfi",  "jal",  "jalr", "beq",
         "bne",    "blt",  "bge",  "bltu", "bgeu", "jal",  "jr",
         "ebreak", "jalr", "beqz", "bnez", "j",
     };
-    char* typenames[] =
-    {
+    char* typenames[] = {
         "x0",  "x1",  "x2",  "x3",  "x4",  "x5",  "x6",  "x7",  "x8",  "x9",
         "x10", "x11", "x12", "x13", "x14", "x15", "x16", "x17", "x18", "x19",
         "x20", "x21", "x22", "x23", "x24", "x25", "x26", "x27", "x28", "x29",
@@ -147,7 +143,7 @@ syntax_rust_frame_handler(yed_event* event)
     frame = event->frame;
 
     if (!frame || !frame->buffer || frame->buffer->kind != BUFF_KIND_FILE ||
-            frame->buffer->ft != yed_get_ft("RV64ASM"))
+        frame->buffer->ft != yed_get_ft("RV64ASM"))
     {
         return;
     }
@@ -163,7 +159,7 @@ syntax_rust_line_handler(yed_event* event)
     frame = event->frame;
 
     if (!frame || !frame->buffer || frame->buffer->kind != BUFF_KIND_FILE ||
-            frame->buffer->ft != yed_get_ft("RV64ASM"))
+        frame->buffer->ft != yed_get_ft("RV64ASM"))
     {
         return;
     }
@@ -175,7 +171,7 @@ void
 syntax_rust_buff_mod_pre_handler(yed_event* event)
 {
     if (event->buffer == NULL || event->buffer->kind != BUFF_KIND_FILE ||
-            event->buffer->ft != yed_get_ft("RV64ASM"))
+        event->buffer->ft != yed_get_ft("RV64ASM"))
     {
         return;
     }
@@ -187,7 +183,7 @@ void
 syntax_rust_buff_mod_post_handler(yed_event* event)
 {
     if (event->buffer == NULL || event->buffer->kind != BUFF_KIND_FILE ||
-            event->buffer->ft != yed_get_ft("RV64ASM"))
+        event->buffer->ft != yed_get_ft("RV64ASM"))
     {
         return;
     }
